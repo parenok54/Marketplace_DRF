@@ -13,9 +13,9 @@ class Post(models.Model):
         blank=True, null=True
     )
     user = models.ForeignKey(
-        User, on_delete = models.SET_NULL,
-        related_name = "users_posts",
-        blank= True, null=True,
+        User, on_delete=models.SET_NULL,
+        related_name="users_posts",
+        blank=True, null=True,
         verbose_name = "Пользователь"
     )
     title = models.CharField(
