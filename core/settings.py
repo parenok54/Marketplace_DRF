@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.posts',
     'apps.categories',
-    
+
     #docs
     'drf_yasg',
 ]
@@ -145,9 +145,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
-
-
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
