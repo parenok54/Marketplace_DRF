@@ -1,5 +1,8 @@
 from rest_framework import permissions
 
+
 class PostPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return bool(obj.user.pk == request.user.pk)
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return bool(request.user and request.user.is_authenticated and obj.user_id == request.user.id)
