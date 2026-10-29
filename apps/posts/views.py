@@ -1,3 +1,4 @@
+from decimal import Decimal, InvalidOperation
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins, filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -30,18 +31,32 @@ class PostAPIView(GenericViewSet,
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
         category_id = self.request.query_params.get('category')
         if category_id:
-            queryset = queryset.filter(category_id=category_id)
+            try:
+                queryset = queryset.filter(category_id=int(category_id))
+            except (ValueError, TypeError):
+                pass
+
         category_slug = self.request.query_params.get('category_slug')
         if category_slug:
             queryset = queryset.filter(category__slug=category_slug)
+
         min_price = self.request.query_params.get('min_price')
         if min_price:
-            queryset = queryset.filter(price__gte=min_price)
+            try:
+                queryset = queryset.filter(price__gte=Decimal(str(min_price).strip()))
+            except (ValueError, TypeError, InvalidOperation):
+                pass
+
         max_price = self.request.query_params.get('max_price')
         if max_price:
-            queryset = queryset.filter(price__lte=max_price)
+            try:
+                queryset = queryset.filter(price__lte=Decimal(str(max_price).strip()))
+            except (ValueError, TypeError, InvalidOperation):
+                pass
+
         return queryset
 
     def perform_create(self, serializer):

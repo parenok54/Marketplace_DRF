@@ -27,6 +27,9 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
+    category_detail = CategorySerializer(source='category', read_only=True)
+    author_username = serializers.CharField(source='user.username', read_only=True)
+
     class Meta:
         model = Post
         fields = (
@@ -36,4 +39,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
             'description',
             'image',
             'category',
+            'category_detail',
+            'author_username',
         )

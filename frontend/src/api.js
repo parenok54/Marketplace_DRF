@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE = 'http://127.0.0.1:8000';
+// When running on Vite dev server (5173), point to Django backend.
+// When served directly by Django (8000 or production), use origin or relative path.
+const isViteDev = typeof window !== 'undefined' && window.location.port === '5173';
+export const API_BASE = isViteDev ? 'http://127.0.0.1:8000' : '';
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -49,8 +52,8 @@ export const createPost = async (formData) => {
 
 export const getImageUrl = (path) => {
   if (!path) return 'https://placehold.co/400x300?text=No+Photo';
-  if (path.startsWith('http')) return path;
-  return `${API_BASE}${path}`;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${API_BASE}${path.startsWith('/') ? '' : '/'}${path}`;
 };
 
 export default api;

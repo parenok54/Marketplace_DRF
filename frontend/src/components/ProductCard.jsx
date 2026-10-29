@@ -64,7 +64,8 @@ export default function ProductCard({
           loading="lazy"
           className="absolute inset-0 w-full h-full object-contain p-5 group-hover:scale-108 transition-transform duration-500"
           onError={(e) => {
-            e.target.src = 'https://placehold.co/400x300?text=No+Photo';
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://placehold.co/400x300?text=No+Photo';
           }}
         />
       </div>

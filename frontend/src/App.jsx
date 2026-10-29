@@ -217,7 +217,9 @@ export default function App() {
     showToast('Выход', 'Вы вышли из аккаунта', 'favorite');
   };
 
-  const displayedProducts = showOnlyFavorites ? favorites : products;
+  const displayedProducts = showOnlyFavorites
+    ? favorites.slice((currentPage - 1) * 12, currentPage * 12)
+    : products;
   const totalPages = Math.ceil((showOnlyFavorites ? favorites.length : totalCount) / 12) || 1;
 
   return (
